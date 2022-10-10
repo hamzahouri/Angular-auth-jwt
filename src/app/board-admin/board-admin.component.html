@@ -1,0 +1,80 @@
+<div class="container">
+  <header class="jumbotron">
+    <p>hello admin</p>
+    <p>{{ content }}</p>
+  </header>
+
+
+
+  <!-- this block of code is added recently to integrate file upload in this project-->
+</div>
+<div class="container" >
+    <div class="col-8">
+      <label class="btn btn-default p-0">
+        <input type="file" accept="application/pdf,
+        application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+        text/plain,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="selectFile($event)" multiple/>
+      </label>
+    </div>
+    <div class="col-4">
+      <button class="btn btn-success btn-sm" [disabled]="!selectedFiles" (click)="upload()">
+        Upload
+      </button>
+    </div>
+  </div>
+
+  <!-- commenting the progres bar temporarly -->
+  <!--
+  <div *ngIf="currentFile" class="progress my-3"  >
+    <div 
+    
+      class="progress-bar progress-bar-info progress-bar-striped"
+      role="progressbar"
+      attr.aria-valuenow="{{ progress }}"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      [ngStyle]="{ width: progress + '%' }"
+    >
+      {{ progress }}%
+    </div>
+  </div>
+  -->
+
+ 
+
+  <!-- Search box-->
+  <div class="input-group">
+    <input  #myInput
+             type="text"
+               class="form-control rounded" 
+               placeholder="Chercher un fichier" aria-label="Search"
+               aria-describedby="search-addon" 
+               (keyup.enter)="searchFile(myInput.value)" />
+
+    <button type="button" class="btn btn-outline-primary" id="name" (click)="searchFile(myInput.value)" >search</button>
+     </div>
+
+
+  <div *ngIf="message"  [ngClass]="{'alert alert-success' :classCondi,'alert alert-danger':!classCondi }" role="alert">{{ message }}</div>
+  
+  <button type="button" class="btn btn-primary" (click)="showDiv()">{{ !showFiles ? 'SHOW FILES' : 'HIDE FILES'}}</button>
+  
+ 
+  <div class="card mt-3" *ngIf="showFiles == true">
+    <div class="card-header">List of Files</div>
+    <ul
+      class="list-group list-group-flush"
+      *ngFor="let file of fileInfo | async"
+    >
+      <li class="list-group-item">
+        <a href="{{ file.url }}">{{ file.name }}</a>
+        
+      </li>
+    </ul>
+  </div>
+
+  <!-- <div >
+  <app-display-files [filesDisplayed]="fileReturned"></app-display-files>  
+  </div> -->
+  
+
